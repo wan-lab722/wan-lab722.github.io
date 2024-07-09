@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Wwan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Wwan&#39;s blog">
 <meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="og:site_name" content="Wwan&#39;s blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Wwan">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Wwan&#39;s blog" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -43,11 +43,13 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/001.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/"></a></h1>
+		  <h1 class="header-author"><a href="/">Wwan</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">一个wanwan</p>
 		
 
 		<nav class="header-menu">
@@ -101,11 +103,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/001.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author"></h1>
+			  <h1 class="header-author js-header-author">Wwan</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>一个wanwan<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -151,6 +155,110 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-文件上传" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h4 id="web151-前台校验"><a href="#web151-前台校验" class="headerlink" title="web151(前台校验)"></a>web151(前台校验)</h4><p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708110833100.png" alt="image-20240708110833100"></p>
+<p>题目这样写，感觉问题应该是出在前端。那么我们就去看看网页源代码，能找到这样一段</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708111129112.png" alt="image-20240708111129112"></p>
+<p>看不太懂问了一下ai，得到这样的解释</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708111403729.png" alt="image-20240708111403729"></p>
+<p>只接受PNG格式，那就看看能不能改一下变成接受PHP</p>
+<h5 id="ps-网页源代码怎么改：先F12打开开发人员工具，在elements-元素-那里找到需要修改的地方，鼠标右键选择编辑属性就能进行修改了。有的浏览器双击也能改（记录一下防止我下次要改又忘了）"><a href="#ps-网页源代码怎么改：先F12打开开发人员工具，在elements-元素-那里找到需要修改的地方，鼠标右键选择编辑属性就能进行修改了。有的浏览器双击也能改（记录一下防止我下次要改又忘了）" class="headerlink" title="ps:网页源代码怎么改：先F12打开开发人员工具，在elements(元素)那里找到需要修改的地方，鼠标右键选择编辑属性就能进行修改了。有的浏览器双击也能改（记录一下防止我下次要改又忘了）"></a>ps:网页源代码怎么改：先F12打开开发人员工具，在elements(元素)那里找到需要修改的地方，鼠标右键选择编辑属性就能进行修改了。有的浏览器双击也能改（记录一下防止我下次要改又忘了）</h5><p>改完之后直接上传一个php文件就行，里面可以写上一句代码</p>
+<p>eg:(这个是用get传参的形式)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">eval(&#x27;$_GET[1]&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传成功就可以看到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708112817430.png" alt="image-20240708112817430"></p>
+<p>照着路径，在url那编辑：（路径+get传参(system函数)）</p>
+<p>find &#x2F; -name flag.php    ——从根目录查询文件名为flag.php的文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708113153094.png" alt="image-20240708113153094"></p>
+<p>页面回显出两条路径，都cat一下发现页面回显空白，点开源代码试试，发现有一条路径里能看到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708112515214.png" alt="image-20240708112515214"></p>
+<p>或直接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ../ flag.php</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="web152"><a href="#web152" class="headerlink" title="web152"></a>web152</h4><p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708114031284.png" alt="image-20240708114031284"></p>
+<p>看到后端那就不能用上面的方法了，不知道怎么办就先上传图片抓个包。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708114549232.png" alt="image-20240708114549232"></p>
+<p>OK我们现在看到了路径，然后将Content-Disposition中的filename文件后缀改成php，发送得到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708185933304.png" alt="image-20240708185933304"></p>
+<p>接下来就可以通过get传参找到flag.php的路径，cat得到flag。</p>
+<p>&#x2F;&#x2F;151也能这样做其实</p>
+<h4 id="web153"><a href="#web153" class="headerlink" title="web153"></a>web153</h4><p>用.user.ini方法上传</p>
+<p>（似乎是通过kail的dirsearch搜索出upload下面有index.php。</p>
+<p>先上传一个随意图片，如之前操作一样抓包，把上传文件改为.user.ini，并加上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file = 1.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240709192409443.png" alt="image-20240709192409443"></p>
+<p>随便新建一个1.txt，写入一句话木马，例如之前的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>保存后改文件后缀为1.png（ps：这就是图片马了），再正常地将1.png上传，接下来就可以直接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/upload/index.php?1=system(&#x27;cat ../ flag.php&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>flag就出来了。</p>
+<h4 id="web154"><a href="#web154" class="headerlink" title="web154"></a>web154</h4><p>先是和153一样的做法，但是发现到上传图片马这一步出现了上传失败的提示。</p>
+<p>猜测是不是因为图片马的php被处理了，那就换种方式写一下图片马的内容吧</p>
+<p>&#x2F;&#x2F;可以去搜索看看PHP的四种标记风格~</p>
+<p>第一步先试试大小写绕过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?PhP eval($_GET[1]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传成功了耶，然后就直接查flag吧.</p>
+<p>(所以与153的区别就是文件马的内容可以稍微改一下，绕过它的处理机制)</p>
+<h4 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h4><p>同上，四种php风格试一下发现文件马里面要改成使用短标签绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?</span><br><span class="line">	eval($GET[1]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/08/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-你好" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -299,7 +407,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2024 John Doe
+    		&copy; 2024 Wwan
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
