@@ -156,6 +156,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-XSS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="XSS-lab"><a href="#XSS-lab" class="headerlink" title="XSS-lab"></a>XSS-lab</h2><h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level   1"></a>Level   1</h4><p>&#x2F;&#x2F;反射型xss注入</p>
+<p>&#x2F;&#x2F; JS弹窗函数alert()</p>
+<p>遇到?name&#x3D;test，不妨直接试试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&lt;script&gt;alert()&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level-2"><a href="#Level-2" class="headerlink" title="Level   2"></a>Level   2</h4><p>同1</p>
+<p>查看源码发现&lt;&gt;被编码了,用双引号把左右两边<strong>属性的引号</strong>和<strong>标签</strong>闭合即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert()&lt;/script&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">htmlspecialchars()编码 “&lt;” “&gt;” </span><br><span class="line">&amp;lt;代表小于号(&lt;) </span><br><span class="line">&amp;gt;代表大于符号(&gt;) </span><br><span class="line">&amp;le;表示小于或等于符号(&lt;=) </span><br><span class="line">&amp;ge;表示大于或等于符号(&gt;=)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level   3"></a>Level   3</h4><p>&#x2F;&#x2F;使用不带有&lt;&gt;的事件代码，例如：onfocus、onmouseover</p>
+<p>先要知道：onfocus 事件在对象获得焦点时发生。 onfocus 通常用于 <input>、<select> 以及<a>。最简单的实例就是网页上的一个输入框。</a></select></p>
+<p>猜测后端遇到转换特殊字符为html实体的htmlspecialchars()函数或者str_replace特殊字符删除函数，可以用标签的特殊事件来执行js代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27; onfocus=javascript:alert() &#x27;				——点击输入框获得焦点</span><br><span class="line">&#x27; onmouseover=javascript:alert() &#x27;			——鼠标移至输入框上</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level-4"><a href="#Level-4" class="headerlink" title="Level   4"></a>Level   4</h4><p>同3，单引号改为双引号</p>
+<h4 id="Level-5"><a href="#Level-5" class="headerlink" title="Level   5"></a>Level   5</h4><p>&#x2F;&#x2F;a标签的href属性</p>
+<p>观察发现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、&lt;script&gt;标签会被替换成&lt;scr_ipt&gt;</span><br><span class="line"></span><br><span class="line">2、onfocus事件会被替换成on_focus</span><br></pre></td></tr></table></figure>
+
+<p>所以换一种标签或事件。例如<a>标签</a></p>
+<p>经过一番尝试把他们通通闭合上</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101513438.png" alt="联想截图_20240710113441"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;a href=javascript:alert()&gt;test&lt;/a&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最后点一下蓝色的test即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101513545.png" alt="联想截图_20240710113615"></p>
+<h4 id="Level-6"><a href="#Level-6" class="headerlink" title="Level   6"></a>Level   6</h4><p>&#x2F;&#x2F;大小写绕过</p>
+<p>随便放一条语句进去发现过滤了好多东西，绕过试试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;sCript&gt;alert()&lt;/sCript&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level-7"><a href="#Level-7" class="headerlink" title="Level   7"></a>Level   7</h4><p>&#x2F;&#x2F;双写绕过</p>
+<p>仍然是随便放一句话进去测试，查看源代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101517311.png" alt="image-20240710151749264"></p>
+<p>看这里的最后一行，发现on和script没掉了，用双写绕过，把on和script补回来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; oonnfocus=javascscriptript:alert() &quot;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/10/XSS/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-文件上传" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -297,81 +391,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/07/%E4%BD%A0%E5%A5%BD/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2024/07/06/hello-world/" class="archive-article-date">
-  	<time datetime="2024-07-06T15:59:33.210Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/06/hello-world/">展开全文 >></a>
         </p>
       
 
