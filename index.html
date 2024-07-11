@@ -178,7 +178,10 @@
 
 
 <h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level   3"></a>Level   3</h4><p>&#x2F;&#x2F;使用不带有&lt;&gt;的事件代码，例如：onfocus、onmouseover</p>
-<p>先要知道：onfocus 事件在对象获得焦点时发生。 onfocus 通常用于 <input>、<select> 以及<a>。最简单的实例就是网页上的一个输入框。</a></select></p>
+<p>先要知道：onfocus 事件在对象获得焦点时发生。 onfocus 通常用于 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input&gt;、&lt;select&gt; 以及&lt;a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最简单的实例就是网页上的一个输入框。</p>
 <p>猜测后端遇到转换特殊字符为html实体的htmlspecialchars()函数或者str_replace特殊字符删除函数，可以用标签的特殊事件来执行js代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27; onfocus=javascript:alert() &#x27;				——点击输入框获得焦点</span><br><span class="line">&#x27; onmouseover=javascript:alert() &#x27;			——鼠标移至输入框上</span><br></pre></td></tr></table></figure>
 
