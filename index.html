@@ -173,7 +173,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert()&lt;/script&gt;&quot;</span><br></pre></td></tr></table></figure>
 
 <p>注：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">htmlspecialchars()编码 “&lt;” “&gt;” </span><br><span class="line">&amp;lt;代表小于号(&lt;) </span><br><span class="line">&amp;gt;代表大于符号(&gt;) </span><br><span class="line">&amp;le;表示小于或等于符号(&lt;=) </span><br><span class="line">&amp;ge;表示大于或等于符号(&gt;=)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">htmlspecialchars()编码 “&lt;” “&gt;” </span><br><span class="line">&amp;lt;代表小于号(&lt;) </span><br><span class="line">&amp;gt;代表大于符号(&gt;) </span><br><span class="line">&amp;le;表示小于或等于符号(&lt;=) </span><br><span class="line">&amp;ge;表示大于或等于符号(&gt;=)</span><br><span class="line">&amp;amp;表示&amp;</span><br><span class="line">&amp;quot;表示”</span><br><span class="line"> &#x27;表示’</span><br></pre></td></tr></table></figure>
 
 
 
@@ -209,6 +209,49 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; oonnfocus=javascscriptript:alert() &quot;</span><br></pre></td></tr></table></figure>
 
 
+
+<h4 id="Level-8"><a href="#Level-8" class="headerlink" title="Level   8"></a>Level   8</h4><p>&#x2F;&#x2F;href属性自动解析Unicode编码</p>
+<p>JavaScript伪协议：</p>
+<p>它的功能是将</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaScript：...</span><br></pre></td></tr></table></figure>
+
+<p>后面的语句当做JavaScript代码在本页面执行，并不跳转到其他网页，而是结果返回给当前页面。</p>
+<p>它经常与a标签一起使用，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;a href=javascript:alert(/xss/)&gt;点击我&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>功能是在当前页面弹出一个弹窗。</p>
+<p>还是一样测试一下语句，发现把它丢进了一个链接，还过滤了好多，大小写、双写通通失败，于是想到了href能自动解Unicode编码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101554154.png" alt="image-20240710155403069"></p>
+<p>那就构造一段JavaScript伪协议：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert()</span><br></pre></td></tr></table></figure>
+
+<p>去网站上找个工具编码得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#41;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&#x2F;&#x2F;html实体编码</p>
+<p>测试一个语句，发现ri变成了r_i</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407101610121.png" alt="image-20240710161018041"></p>
+<p>试试html实体编码（下面是ri的编码）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#114;&amp;#105;</span><br></pre></td></tr></table></figure>
+
+<p>所以最后就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javasc&amp;#114;&amp;#105;pt:alert()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level-9"><a href="#Level-9" class="headerlink" title="Level   9"></a>Level   9</h4><p>&#x2F;&#x2F;strpos()函数绕过		</p>
+<p>不知道为什么别人能看到php的源码，经分析得知上传的语句必须包含”http:&#x2F;&#x2F;“，否则会出现“链接不合法”的提示。</p>
+<p>但是我们好像不太需要这个”http:&#x2F;&#x2F;“，所以给他注释掉就行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#41;/* http:// */</span><br></pre></td></tr></table></figure>
+
+<p>前面一串是js伪协议的unicode编码</p>
+<h4 id="Level-10"><a href="#Level-10" class="headerlink" title="Level   10"></a>Level   10</h4><p>点进去输入框什么的都没有，于是查看源代码，发现都给他用hidden隐藏起来了，于是回去修改一下网页源代码，把hidden改为text，出现了输入框，但是没得提交，所以想到直接把value的值给改成注入语句。总共有三个嘛，都试一试，发现第三个改好之后就成功了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/202407111029991.png" alt="联想截图_20240711102701"></p>
+<h4 id="Level-11-12-13-14"><a href="#Level-11-12-13-14" class="headerlink" title="Level   11&amp;&amp;12&amp;&amp;13&amp;&amp;14"></a>Level   11&amp;&amp;12&amp;&amp;13&amp;&amp;14</h4><p>同10，一模一样的做法都可以做</p>
+<p>&#x2F;&#x2F;14关可能不一样一点，在iframe那里加一句即可。</p>
+<h4 id="Level-15"><a href="#Level-15" class="headerlink" title="Level   15"></a>Level   15</h4>
       
 
       
