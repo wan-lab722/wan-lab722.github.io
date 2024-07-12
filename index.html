@@ -323,7 +323,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h4 id="web151-前台校验"><a href="#web151-前台校验" class="headerlink" title="web151(前台校验)"></a>web151(前台校验)</h4><p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708110833100.png" alt="image-20240708110833100"></p>
+        <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h5 id="本人已知解题方法："><a href="#本人已知解题方法：" class="headerlink" title="本人已知解题方法："></a>本人已知解题方法：</h5><ul>
+<li><p>前端修改</p>
+</li>
+<li><p>抓包改文件后缀</p>
+</li>
+<li><p>.user.ini</p>
+</li>
+<li><p>.htaccess</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-http-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="web151-前台校验"><a href="#web151-前台校验" class="headerlink" title="web151(前台校验)"></a>web151(前台校验)</h4><p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708110833100.png" alt="image-20240708110833100"></p>
 <p>题目这样写，感觉问题应该是出在前端。那么我们就去看看网页源代码，能找到这样一段</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708111129112.png" alt="image-20240708111129112"></p>
 <p>看不太懂问了一下ai，得到这样的解释</p>
