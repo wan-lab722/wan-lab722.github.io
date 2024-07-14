@@ -324,14 +324,29 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h5 id="本人已知解题方法："><a href="#本人已知解题方法：" class="headerlink" title="本人已知解题方法："></a>本人已知解题方法：</h5><ul>
-<li><p>前端修改</p>
-</li>
-<li><p>抓包改文件后缀</p>
-</li>
-<li><p>.user.ini</p>
-</li>
+<li>前端修改</li>
+<li>.user.ini</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file = 1.png</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>.htaccess</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-http-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-http-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>文件幻术头绕过</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">jpg对于的前面的16进制字符是</span><br><span class="line">FFD8FFE000104A464946</span><br><span class="line"></span><br><span class="line">png对应的是</span><br><span class="line">89504E47</span><br><span class="line"></span><br><span class="line">gif对应的是</span><br><span class="line">474946383961 // GIF89a</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>服务端MIME类型验证（文件内容类型检测）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当对文件内容有限制时，可以将Content-Type：application/octet-stream等改为：</span><br><span class="line">Content-Type：image/jpeg</span><br><span class="line">Content-Type：image/png</span><br><span class="line">Content-Type：image/gif</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>后缀绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php: php、 phtml、php3、php4、php5 </span><br><span class="line">jsp: jap、jspx、jspf </span><br><span class="line">asp: asa、cer、aspx</span><br><span class="line">ext: exee</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h4 id="web151-前台校验"><a href="#web151-前台校验" class="headerlink" title="web151(前台校验)"></a>web151(前台校验)</h4><p><img src="https://cdn.jsdelivr.net/gh/xzb666-hub/myblogimage@img/image/image-20240708110833100.png" alt="image-20240708110833100"></p>
 <p>题目这样写，感觉问题应该是出在前端。那么我们就去看看网页源代码，能找到这样一段</p>
